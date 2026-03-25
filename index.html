@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Anger Support Tool</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #f5f5f5;
+    }
+    .screen {
+        display: none;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+    }
+    .active {
+        display: block;
+    }
+    button {
+        display: block;
+        margin: 10px 0;
+        padding: 10px;
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        background: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #45a049;
+    }
+    h2 {
+        margin-top: 0;
+    }
+</style>
+</head>
+<body>
+
+<!-- Screen 1 -->
+<div id="screen1" class="screen active">
+    <h2>Managing Anger</h2>
+    <p>Let’s work through this in three short steps.</p>
+    <button onclick="next(2)">Start</button>
+    <button onclick="quickCalm()">Quick calming tip</button>
+</div>
+
+<!-- Screen 2 -->
+<div id="screen2" class="screen">
+    <h2>What triggered this?</h2>
+    <button onclick="setTrigger('Someone said something')">Someone said something</button>
+    <button onclick="setTrigger('Feeling disrespected')">Feeling disrespected</button>
+    <button onclick="setTrigger('Arguments')">Arguments</button>
+    <button onclick="setTrigger('Stress / pressure')">Stress / pressure</button>
+    <button onclick="setTrigger('Something else')">Something else</button>
+</div>
+
+<!-- Screen 3 -->
+<div id="screen3" class="screen">
+    <h2>What do you notice?</h2>
+    <button onclick="setWarning('Heavy breathing')">Heavy breathing</button>
+    <button onclick="setWarning('Feeling hot')">Feeling hot</button>
+    <button onclick="setWarning('Tense shoulders')">Tense shoulders</button>
+    <button onclick="setWarning('Racing thoughts')">Racing thoughts</button>
+</div>
+
+<!-- Screen 4 -->
+<div id="screen4" class="screen">
+    <h2>Pick something to try</h2>
+    <button onclick="setStrategy('Breathe slowly')">Breathe slowly</button>
+    <button onclick="setStrategy('Count to 10')">Count to 10</button>
+    <button onclick="setStrategy('Sit down')">Sit down</button>
+    <button onclick="setStrategy('Walk away')">Walk away</button>
+</div>
+
+<!-- Screen 5 -->
+<div id="screen5" class="screen">
+    <h2>Your plan</h2>
+    <p id="planText"></p>
+    <button onclick="restart()">Start again</button>
+    <button onclick="quickCalm()">Quick calming tip</button>
+</div>
+
+<script>
+let trigger = "";
+let warning = "";
+let strategy = "";
+
+function next(screen) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen' + screen).classList.add('active');
+}
+
+function setTrigger(value) {
+    trigger = value;
+    next(3);
+}
+
+function setWarning(value) {
+    warning = value;
+    next(4);
+}
+
+function setStrategy(value) {
+    strategy = value;
+    buildPlan();
+    next(5);
+}
+
+function buildPlan() {
+    let text = `When I notice ${warning} after ${trigger}, I will ${strategy}.`;
+    document.getElementById('planText').innerText = text;
+}
+
+function restart() {
+    trigger = "";
+    warning = "";
+    strategy = "";
+    next(1);
+}
+
+function quickCalm() {
+    alert("Drop your shoulders. Breathe in slowly. Breathe out even more slowly.");
+}
+</script>
+
+</body>
+</html>
